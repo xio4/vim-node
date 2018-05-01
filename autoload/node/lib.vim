@@ -37,7 +37,9 @@ function! s:absolutize(name, from)
 		return a:name
 	elseif a:name =~# s:RELPATH
 		let dir = isdirectory(a:from) ? a:from : fnamemodify(a:from, ":h")
-		return dir . "/" . a:name
+		return fnamemodify(dir . "/" . a:name, ':.')
+    elseif isdirectory(fnamemodify(a:name, ":h"))
+        return a:name
 	else
 		return b:node_root . "/node_modules/" . a:name
 	endif
